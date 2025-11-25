@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { Outlet, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-const AuthLayout = () => {
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   const [cookies] = useCookies(["access_token", "user"]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,7 +13,7 @@ const AuthLayout = () => {
     }
   }, [cookies, navigate, location]);
 
-  return <Outlet />;
+  return children;
 };
 
 export default AuthLayout;

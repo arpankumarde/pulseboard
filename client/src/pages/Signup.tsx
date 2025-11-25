@@ -43,12 +43,17 @@ const Signup = () => {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          toast.error(error?.response?.data?.detail);
+          return;
+        }
         if (error.response?.status === 401) {
-          toast.error("Invalid email or password.");
+          toast.error(error?.response?.data?.detail || "Invalid email or password.");
           return;
         }
       }
-      toast.error("An error occurred during login. Please try again.");
+
+      toast.error("An error occurred during signup. Please try again.");
     }
   };
 

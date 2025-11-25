@@ -6,6 +6,8 @@ import NotFound from "./pages/NotFound";
 import DefaultLayout from "./layouts/DefaultLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import DashboardHome from "./pages/dashboard/DashboardHome";
+import DashboardLayout from "./layouts/DashboardLayout";
+import DashboardSubscription from "./pages/dashboard/DashboardSubscription";
 
 const App = () => {
   return (
@@ -16,8 +18,15 @@ const App = () => {
         <Route path="/signup" Component={Signup} />
       </Route>
 
-      <Route Component={AuthLayout}>
+      <Route
+        element={
+          <AuthLayout>
+            <DashboardLayout />
+          </AuthLayout>
+        }
+      >
         <Route path="/dashboard" Component={DashboardHome} />
+        <Route path="/dashboard/subscription" Component={DashboardSubscription} />
       </Route>
 
       <Route path="*" Component={NotFound} />
