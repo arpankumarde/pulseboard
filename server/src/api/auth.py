@@ -16,23 +16,26 @@ router = APIRouter()
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(user: User, db: db_dependency):
-    try:
-        UserModel = User(
-            name=user.name, email=user.email, password=hash_password(user.password)
+    existing_user = db.query(User).filter(User.email == user.email).first()
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User with this email already exists.",
         )
-        db.add(UserModel)
-        db.commit()
-        db.refresh(UserModel)
-        access_token = create_access_token(UserModel.id, timedelta(days=30))
-        del UserModel.password
-        return {
-            "success": True,
-            "user": UserModel,
-            "access_token": access_token,
-            "token_type": "bearer",
-        }
-    except Exception as e:
-        return {"success": False, "error": str(e)}
+    UserModel = User(
+        name=user.name, email=user.email, password=hash_password(user.password)
+    )
+    db.add(UserModel)
+    db.commit()
+    db.refresh(UserModel)
+    access_token = create_access_token(UserModel.id, timedelta(days=30))
+    del UserModel.password
+    return {
+        "success": True,
+        "user": UserModel,
+        "access_token": access_token,
+        "token_type": "bearer",
+    }
 
 
 @router.post("/login")
