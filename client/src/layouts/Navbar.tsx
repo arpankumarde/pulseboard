@@ -2,26 +2,30 @@ import { useState } from "react";
 import { Menu, X, Activity } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
+import { useCookies } from "react-cookie";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [cookies, , removeCookie] = useCookies(["access_token", "user"]);
+  const authenticated = Boolean(cookies?.access_token && cookies?.user);
+
+  const handleLogout = () => {
+    removeCookie("access_token");
+    removeCookie("user");
+    navigate("/");
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
+          <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <div className="flex h-8 w-8 items-center justify-center bg-primary text-white rounded-none">
               <Activity className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-neutral-900">
-              Pulseboard
-            </span>
-          </div>
+            <span className="text-xl font-bold tracking-tight text-neutral-900">Pulseboard</span>
+          </Link>
 
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
@@ -48,14 +52,25 @@ const Navbar = () => {
 
           <div className="hidden md:block">
             <div className="flex items-center space-x-4">
-              <Link to="/login">
-                <Button variant="ghost" size="sm">
-                  Log in
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button size="sm">Get Started</Button>
-              </Link>
+              {authenticated ? (
+                <>
+                  <Button asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                  <Button variant={"destructive"} onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" asChild>
+                    <Link to="/login">Log in</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link to="/signup">Get Started</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -100,16 +115,35 @@ const Navbar = () => {
             </a>
           </div>
           <div className="border-t border-neutral-200 pb-3 pt-4 px-4 space-y-3">
-            <Link to="/login" className="block">
-              <Button variant="outline" className="w-full justify-center">
-                Log in
-              </Button>
-            </Link>
-            <Link to="/signup" className="block">
-              <Button className="w-full justify-center">
-                Get Started Free
-              </Button>
-            </Link>
+            {authenticated ? (
+              <>
+                <Button className="w-full justify-center" asChild>
+                  <Link to="/dashboard" className="block">
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button
+                  variant="destructive"
+                  className="w-full justify-center"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" className="w-full justify-center" asChild>
+                  <Link to="/login" className="block">
+                    Log in
+                  </Link>
+                </Button>
+                <Button className="w-full justify-center" asChild>
+                  <Link to="/signup" className="block">
+                    Get Started Free
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}
