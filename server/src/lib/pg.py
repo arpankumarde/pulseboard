@@ -27,4 +27,5 @@ def sync_plans(db: db_dependency):
     db.commit()
 
 
-# sync_plans(db=next(get_session()))
+if __name__ == "__main__":
+    sync_plans(db=next(get_session()))
