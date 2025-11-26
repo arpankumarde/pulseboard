@@ -40,7 +40,7 @@ def authenticate_user(email: str, password: str, db: Session):
     return user
 
 
-def create_access_token(user_id: int, expires_delta: timedelta):
+def create_access_token(user_id: str, expires_delta: timedelta):
     encode = {"id": user_id}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({"exp": expires})
@@ -50,7 +50,7 @@ def create_access_token(user_id: int, expires_delta: timedelta):
 async def decode_access_token(token: Annotated[str, Depends(oauth2_scheme)]):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("id")
+        user_id: str = payload.get("id")
         if user_id is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
