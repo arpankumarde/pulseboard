@@ -254,10 +254,10 @@ const DashboardHome = () => {
                         session.category === "Coding"
                           ? "bg-blue-500"
                           : session.category === "Writing"
-                          ? "bg-purple-500"
-                          : session.category === "Learning"
-                          ? "bg-yellow-500"
-                          : "bg-neutral-500"
+                            ? "bg-purple-500"
+                            : session.category === "Learning"
+                              ? "bg-yellow-500"
+                              : "bg-neutral-500"
                       }`}
                     />
                     <div className="truncate">

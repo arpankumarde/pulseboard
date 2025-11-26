@@ -12,9 +12,7 @@ const Footer = () => {
               <div className="flex h-8 w-8 items-center justify-center bg-dark text-white rounded-none">
                 <Activity className="h-5 w-5" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-neutral-900">
-                Pulseboard
-              </span>
+              <span className="text-xl font-bold tracking-tight text-neutral-900">Pulseboard</span>
             </div>
             <p className="text-sm leading-6 text-neutral-600">
               Helping solo builders stay consistent and ship more.
@@ -33,9 +31,7 @@ const Footer = () => {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                  Product
-                </h3>
+                <h3 className="text-sm font-semibold leading-6 text-neutral-900">Product</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   <li>
                     <a
@@ -64,9 +60,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                  Company
-                </h3>
+                <h3 className="text-sm font-semibold leading-6 text-neutral-900">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   <li>
                     <a
@@ -89,9 +83,7 @@ const Footer = () => {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-neutral-900">
-                  Legal
-                </h3>
+                <h3 className="text-sm font-semibold leading-6 text-neutral-900">Legal</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   <li>
                     <a

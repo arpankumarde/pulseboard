@@ -35,21 +35,15 @@ const tiers = [
 
 const Pricing = () => {
   return (
-    <div
-      className="bg-white py-24 sm:py-32 border-t border-neutral-200"
-      id="pricing"
-    >
+    <div className="bg-white py-24 sm:py-32 border-t border-neutral-200" id="pricing">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
-          <h2 className="text-base font-semibold leading-7 text-primary">
-            Pricing
-          </h2>
+          <h2 className="text-base font-semibold leading-7 text-primary">Pricing</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
             Simple, transparent pricing
           </p>
           <p className="mt-6 text-lg leading-8 text-neutral-600">
-            Start for free. Upgrade when you're ready to take your productivity
-            to the next level.
+            Start for free. Upgrade when you're ready to take your productivity to the next level.
           </p>
         </div>
         <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-8 lg:max-w-4xl lg:grid-cols-2">
@@ -72,9 +66,7 @@ const Pricing = () => {
                   {tier.name}
                 </h3>
                 <p className="mt-4 flex items-baseline gap-x-2">
-                  <span className="text-5xl font-bold tracking-tight">
-                    {tier.price}
-                  </span>
+                  <span className="text-5xl font-bold tracking-tight">{tier.price}</span>
                   <span
                     className={`text-base ${
                       tier.highlighted ? "text-neutral-400" : "text-neutral-500"
@@ -110,10 +102,7 @@ const Pricing = () => {
                 </ul>
               </div>
               <div className="mt-8">
-                <Button
-                  variant={tier.highlighted ? "default" : "outline"}
-                  className="w-full"
-                >
+                <Button variant={tier.highlighted ? "default" : "outline"} className="w-full">
                   {tier.cta}
                 </Button>
               </div>

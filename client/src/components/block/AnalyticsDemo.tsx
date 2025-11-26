@@ -27,23 +27,17 @@ const categoryData = [
 
 const AnalyticsDemo = () => {
   return (
-    <div
-      className="bg-neutral-50 py-24 sm:py-32 overflow-hidden"
-      id="analytics"
-    >
+    <div className="bg-neutral-50 py-24 sm:py-32 overflow-hidden" id="analytics">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
           <div className="lg:col-span-5 mb-16 lg:mb-0">
-            <h2 className="text-base font-semibold leading-7 text-primary">
-              Data Intelligence
-            </h2>
+            <h2 className="text-base font-semibold leading-7 text-primary">Data Intelligence</h2>
             <p className="mt-2 text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
               Precision Analytics
             </p>
             <p className="mt-6 text-lg leading-8 text-neutral-600">
-              Stop guessing. Pulseboard Pro transforms your work patterns into
-              actionable insights. Visualize your velocity, identify
-              bottlenecks, and optimize your deep work capability.
+              Stop guessing. Pulseboard Pro transforms your work patterns into actionable insights.
+              Visualize your velocity, identify bottlenecks, and optimize your deep work capability.
             </p>
             <div className="mt-10 space-y-6">
               <div className="flex gap-4">
@@ -51,12 +45,8 @@ const AnalyticsDemo = () => {
                   <TrendingUp className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900">
-                    Velocity Tracking
-                  </h3>
-                  <p className="text-sm text-neutral-600">
-                    Monitor your daily output trend.
-                  </p>
+                  <h3 className="font-semibold text-neutral-900">Velocity Tracking</h3>
+                  <p className="text-sm text-neutral-600">Monitor your daily output trend.</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -64,9 +54,7 @@ const AnalyticsDemo = () => {
                   <Zap className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neutral-900">
-                    Focus Score
-                  </h3>
+                  <h3 className="font-semibold text-neutral-900">Focus Score</h3>
                   <p className="text-sm text-neutral-600">
                     Algorithmic quality rating of your sessions.
                   </p>
@@ -86,9 +74,7 @@ const AnalyticsDemo = () => {
                   <p className="text-neutral-400 text-sm uppercase tracking-wider">
                     Weekly Overview
                   </p>
-                  <h3 className="text-2xl font-bold text-white mt-1">
-                    October 22 - 28
-                  </h3>
+                  <h3 className="text-2xl font-bold text-white mt-1">October 22 - 28</h3>
                 </div>
                 <div className="text-right hidden sm:block">
                   <p className="text-3xl font-bold text-white">28.8h</p>
@@ -100,30 +86,12 @@ const AnalyticsDemo = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={weeklyData}>
                     <defs>
-                      <linearGradient
-                        id="colorHours"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="5%"
-                          stopColor="#0F62FE"
-                          stopOpacity={0.3}
-                        />
-                        <stop
-                          offset="95%"
-                          stopColor="#0F62FE"
-                          stopOpacity={0}
-                        />
+                      <linearGradient id="colorHours" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0F62FE" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#0F62FE" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke="#333"
-                      vertical={false}
-                    />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
                     <XAxis
                       dataKey="name"
                       stroke="#666"
@@ -132,12 +100,7 @@ const AnalyticsDemo = () => {
                       axisLine={false}
                       dy={10}
                     />
-                    <YAxis
-                      stroke="#666"
-                      fontSize={12}
-                      tickLine={false}
-                      axisLine={false}
-                    />
+                    <YAxis stroke="#666" fontSize={12} tickLine={false} axisLine={false} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "#262626",
@@ -161,9 +124,7 @@ const AnalyticsDemo = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-dark-surface p-4 rounded-sm border border-neutral-700">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-neutral-400 text-xs uppercase">
-                      Top Category
-                    </span>
+                    <span className="text-neutral-400 text-xs uppercase">Top Category</span>
                     <span className="text-primary text-xs">65%</span>
                   </div>
                   <div className="flex items-end justify-between">
@@ -184,9 +145,7 @@ const AnalyticsDemo = () => {
                 </div>
                 <div className="bg-dark-surface p-4 rounded-sm border border-neutral-700">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-neutral-400 text-xs uppercase">
-                      Current Streak
-                    </span>
+                    <span className="text-neutral-400 text-xs uppercase">Current Streak</span>
                     <Calendar className="w-3 h-3 text-neutral-500" />
                   </div>
                   <div className="flex items-center gap-2">

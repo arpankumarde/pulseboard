@@ -101,7 +101,7 @@ const DashboardSubscription = () => {
           headers: {
             Authorization: `Bearer ${cookies.access_token}`,
           },
-        }
+        },
       );
       if (data.success) {
         handlePayment();
@@ -127,7 +127,7 @@ const DashboardSubscription = () => {
           setUser(data.user);
           setSubscription(data.subscription);
           setIsPro(
-            data.subscription !== null && data.subscription.status === "active" ? true : false
+            data.subscription !== null && data.subscription.status === "active" ? true : false,
           );
         }
       });
