@@ -1,8 +1,142 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, AlertTriangle } from "lucide-react";
+import api from "@/lib/api";
+import { CheckCircle2, AlertTriangle, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+type Subscription = {
+  id: string;
+  user_id: string;
+  plan_id: string;
+  status: string;
+  pg_subscription_id: string;
+};
+
+interface StatusResponse {
+  success: boolean;
+  data: {
+    user: User;
+    subscription: Subscription | null;
+  };
+}
+
+interface SubCreateResponse {
+  success: boolean;
+  data: {
+    subscription_id: string;
+  };
+}
 
 const DashboardSubscription = () => {
-  const isPro = false;
+  const [user, setUser] = useState<User | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [isPro, setIsPro] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [cookies, ,] = useCookies(["access_token"]);
+
+  const handlePayment = () => {
+    const options = {
+      key: import.meta.env.VITE_PG_KEY_ID,
+      amount: "69900",
+      currency: "INR",
+      subscription_id: subscription?.pg_subscription_id || "",
+      // name: "Pulseboard",
+      description: "Upgrade to Pulseboard Pro",
+      handler: (response: unknown) => {
+        console.log(response);
+        // alert("Payment Successful!");
+      },
+      prefill: {
+        name: user?.name,
+        email: user?.email,
+        contact: user?.phone || null,
+      },
+      theme: {
+        color: "#0f62fe",
+      },
+    };
+    try {
+      // @ts-expect-error Razorpay is expected to be a constructor
+      const razorpayInstance = new Razorpay(options);
+      razorpayInstance.open();
+    } catch (error) {
+      console.error("Error opening Razorpay:", error);
+      toast.error("Error opening payment gateway. Please try again.");
+    }
+  };
+
+  const getCurrentStatus = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get<StatusResponse>("/api/v1/subscription/status", {
+        headers: {
+          Authorization: `Bearer ${cookies.access_token}`,
+        },
+      });
+      return data.data;
+    } catch (error) {
+      console.error("Error fetching subscription status:", error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePlanUpgrade = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.post<SubCreateResponse>(
+        "/api/v1/subscription/create",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.access_token}`,
+          },
+        }
+      );
+      if (data.success) {
+        handlePayment();
+      }
+    } catch (error) {
+      console.error("Error upgrading plan:", error);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          toast.error(error?.response?.data?.detail || "Invalid email or password.");
+          return;
+        }
+      }
+      toast.error("Error upgrading plan. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      getCurrentStatus().then((data) => {
+        if (data) {
+          setUser(data.user);
+          setSubscription(data.subscription);
+          setIsPro(
+            data.subscription !== null && data.subscription.status === "active" ? true : false
+          );
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching subscription status:", error);
+      toast.error("Error fetching subscription status. Please refresh the page.");
+    }
+  }, []);
+  console.log(loading);
 
   return (
     <div className="space-y-6">
@@ -34,7 +168,13 @@ const DashboardSubscription = () => {
                     : "bg-neutral-50 text-neutral-600 ring-neutral-500/10"
                 }`}
               >
-                {isPro ? "Active" : "Basic Account"}
+                {loading ? (
+                  <Loader2 className="animate-spin" />
+                ) : isPro ? (
+                  "Active"
+                ) : (
+                  "Basic Account"
+                )}
               </span>
             </div>
           </div>
@@ -64,7 +204,13 @@ const DashboardSubscription = () => {
                     </li>
                   ))}
                 </ul>
-                <Button>Upgrade for ₹699/mo</Button>
+                {loading ? (
+                  <Button disabled>
+                    <Loader2 className="animate-spin" />
+                  </Button>
+                ) : (
+                  <Button onClick={handlePlanUpgrade}>Upgrade for ₹699/mo</Button>
+                )}
               </div>
             </div>
           </div>
@@ -83,7 +229,7 @@ const DashboardSubscription = () => {
         )}
       </div>
 
-      <div className="overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-neutral-200">
+      {/* <div className="overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-neutral-200">
         <div className="px-4 py-5 sm:p-6">
           <h3 className="text-base font-semibold leading-6 text-neutral-900">Payment Methods</h3>
           <div className="mt-5 text-sm text-neutral-500">
@@ -93,7 +239,7 @@ const DashboardSubscription = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
